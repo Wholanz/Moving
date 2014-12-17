@@ -2,7 +2,6 @@ package com.example.Moving;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,6 @@ public class OnGame extends Activity {
      */
     final static String LOG_TAG="StartApp";
     MediaPlayer mp;
-    AudioManager am;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +28,7 @@ public class OnGame extends Activity {
         setContentView(view);
 
         //Play the BGM when first activity starts
-        mp=new MediaPlayer();
-        //am=(AudioManager) this.getSystemService(this.AUDIO_SERVICE);
-        try {
-            //TODO: Change the source
-            mp.setDataSource("/storage/emulated/0/Download/secret-base.mp3");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            mp.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mp=MediaPlayer.create(this,R.raw.moving_bgm);
         mp.start();
 
         //Edit the animation when the game starts
