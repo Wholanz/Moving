@@ -9,15 +9,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:scaleType="fitXY"
-            android:layout_alignParentBottom="true" android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
-            <!--android:background="@drawable/maki"-->
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MovingGame ver1.0"
+            android:text="BallGame ver1.0"
             android:id="@+id/textView" android:layout_gravity="center_horizontal"
-            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="19dp"/>
+            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
 </RelativeLayout>
 

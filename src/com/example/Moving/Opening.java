@@ -33,7 +33,7 @@ public class Opening extends Activity {
         //Play the BGM when first activity starts
 
         imageView=(ImageView)findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.maki);
+        imageView.setImageResource(R.drawable.opening);
 
         mp=MediaPlayer.create(this,R.raw.moving_bgm);
         mp.start();
