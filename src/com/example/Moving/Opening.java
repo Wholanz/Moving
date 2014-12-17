@@ -45,7 +45,7 @@ public class Opening extends Activity {
         final AlphaAnimation pictureIn = new AlphaAnimation(0,1.0f);
         final AlphaAnimation pictureOut = new AlphaAnimation(1.0f,1.0f);
         pictureIn.setDuration(2000);
-        pictureOut.setDuration(2000);
+        pictureOut.setDuration(1000);
         view.startAnimation(pictureIn);
 
         pictureIn.setAnimationListener(new Animation.AnimationListener() {
