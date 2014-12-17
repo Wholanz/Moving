@@ -19,7 +19,7 @@ public class Opening extends Activity {
     /**
      * Called when the activity is first created.
      */
-    //private ImageView imageView;
+    private ImageView imageView;
     private SoundPool soundPool;
     private int clickStart;
     private final static String LOG_TAG="StartApp";
@@ -33,8 +33,8 @@ public class Opening extends Activity {
         setContentView(view);
         //Play the BGM when first activity starts
 
-        //imageView=(ImageView)findViewById(R.id.imageView);
-        //imageView.setImageResource(R.drawable.maki);
+        imageView=(ImageView)findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.maki);
 
         mp=MediaPlayer.create(this,R.raw.moving_bgm);
         mp.start();
@@ -44,7 +44,7 @@ public class Opening extends Activity {
 
         //Edit the animation when the game starts
         final AlphaAnimation pictureIn = new AlphaAnimation(0,1.0f);
-        final AlphaAnimation pictureOut = new AlphaAnimation(1.0f,0);
+        final AlphaAnimation pictureOut = new AlphaAnimation(1.0f,1.0f);
         pictureIn.setDuration(2000);
         pictureOut.setDuration(2000);
         view.startAnimation(pictureIn);
@@ -73,11 +73,11 @@ public class Opening extends Activity {
         pictureOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                mp.stop();
-                //redirectTo();
+                mp.pause();
                 Log.d(LOG_TAG,"Game:Direct to the next activity");
                 Intent intent = new Intent(Opening.this, Main.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.roomin,R.anim.roomout);
                 finish();
             }
 
@@ -90,12 +90,6 @@ public class Opening extends Activity {
             }
         });
 
-    }
-    private void redirectTo(){
-        Log.d(LOG_TAG,"Game:Direct to the next activity");
-        Intent intent = new Intent(this, Main.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
