@@ -15,5 +15,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Main" android:label="onstart"/>
+        <activity android:name=".MainList"/>
     </application>
 </manifest>

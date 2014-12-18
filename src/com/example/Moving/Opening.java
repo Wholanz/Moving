@@ -74,7 +74,7 @@ public class Opening extends Activity {
             public void onAnimationEnd(Animation arg0) {
                 mp.pause();
                 Log.d(LOG_TAG,"Game:Direct to the next activity");
-                Intent intent = new Intent(Opening.this, Main.class);
+                Intent intent = new Intent(Opening.this, MainList.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.roomin,R.anim.roomout);
                 finish();
