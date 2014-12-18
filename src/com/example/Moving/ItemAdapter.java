@@ -20,7 +20,6 @@ public class ItemAdapter extends ArrayAdapter<MainListItem>{
         super(context,textViewResourceId,objects);
         resourceId=textViewResourceId;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         MainListItem listItem=getItem(position);

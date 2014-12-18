@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -33,6 +35,13 @@ public class MainList extends Activity {
         ItemAdapter adapter=new ItemAdapter(MainList.this,R.layout.main_list_item,mainList);
         ListView listView=(ListView)findViewById(R.id.main_list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+                MainListItem item=mainList.get(position);
+            }
+        });
         soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
         onClick=soundPool.load(this,R.raw.normalclick,1);
         onAlert=soundPool.load(this,R.raw.alert,1);
