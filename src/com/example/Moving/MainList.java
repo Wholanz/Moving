@@ -105,7 +105,7 @@ public class MainList extends Activity {
         soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
         onClick=soundPool.load(this,R.raw.normalclick,1);
         onAlert=soundPool.load(this,R.raw.alert,1);
-        mp=MediaPlayer.create(this, R.raw.main_music);
+        mp=MediaPlayer.create(this, R.raw.list_music);
         mp.setLooping(true);
         mp.start();
 
