@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -167,6 +166,7 @@ public class MainList extends Activity {
         Log.d(LOG_TAG,"Game:Pause");
     }
 
+    @Override
     public void onBackPressed(){
         Log.d(LOG_TAG, "Game:onBackPressed");
         soundPool.play(onAlert, 1.0F, 1.0F, 0, 0, 1.0F);

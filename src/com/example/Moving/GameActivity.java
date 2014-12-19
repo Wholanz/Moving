@@ -11,10 +11,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,6 +30,8 @@ import android.widget.TextView;
 public class GameActivity extends Activity implements OnTouchListener {
 	
 //	private Map map;
+
+	private final static String LOG_TAG="Game Activity";
 	
 	int screenWidth;  
     int screenHeight;  
@@ -36,6 +41,9 @@ public class GameActivity extends Activity implements OnTouchListener {
 	private ImageView image;
 	private Timer timer = new Timer();
 	private Timer TimerMove;
+
+	private int onClick;
+	private SoundPool soundPool;
 
 	private final static int TIME_1S = 1;
 	private final static int RESET_TIME = 2;
@@ -69,6 +77,8 @@ public class GameActivity extends Activity implements OnTouchListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.game);
 
+		soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
+		onClick=soundPool.load(this,R.raw.normalclick,1);
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 
@@ -350,6 +360,13 @@ public class GameActivity extends Activity implements OnTouchListener {
 	public static int convertDpToPx(Context context, float dpValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dpValue * scale + 0.5f);
+	}
+
+	@Override
+	public void onBackPressed(){
+		Log.d(LOG_TAG, "onBackPressed");
+		soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+		finish();
 	}
 
 }
