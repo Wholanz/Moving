@@ -53,13 +53,6 @@ public class MainList extends Activity {
         ItemAdapter adapter=new ItemAdapter(MainList.this,R.layout.main_list_item,mainList);
         final ListView listView=(ListView)findViewById(R.id.main_list);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
-                MainListItem item = mainList.get(position);
-            }
-        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

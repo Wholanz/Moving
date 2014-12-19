@@ -22,7 +22,6 @@ public class Settings extends Activity {
 
         soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
         onClick=soundPool.load(this,R.raw.normalclick,1);
-
     }
 
     @Override
