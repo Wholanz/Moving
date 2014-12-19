@@ -36,9 +36,14 @@ public class MainList extends Activity {
 
     private int onClick;
     private int onAlert;
+    private boolean isVoiceOn=true;
     private Button voiceButton;
     private MediaPlayer mp;
     private SoundPool soundPool;
+
+    private int difficulty=1;
+    private boolean[] stage=new boolean[6];
+
     private List<MainListItem>mainList=new ArrayList<MainListItem>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,8 @@ public class MainList extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mp.pause();
+                soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
                 MainListItem item=mainList.get(position);
                 if(item.getName()==NEW_GAME) {
                     Log.d(LOG_TAG, "GameList:New Game");
@@ -104,10 +111,8 @@ public class MainList extends Activity {
 
         voiceButton=(Button)findViewById(R.id.voice_btn);
         voiceButton.setOnClickListener(new View.OnClickListener() {
-            boolean isVoiceOn=false;
             @Override
             public void onClick(View v) {
-                isVoiceOn=!isVoiceOn;
                 if(isVoiceOn){
                     v.setBackgroundResource(R.drawable.voice_off);
                     mp.pause();
@@ -115,6 +120,7 @@ public class MainList extends Activity {
                     v.setBackgroundResource(R.drawable.voice_on);
                     mp.start();
                 }
+                isVoiceOn=!isVoiceOn;
             }
         });
     }
@@ -139,6 +145,28 @@ public class MainList extends Activity {
         inflater.inflate(R.menu.mainmenu,menu);
         return true;
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(isVoiceOn==true)
+        {
+            mp.start();
+            findViewById(R.id.voice_btn).setBackgroundResource(R.drawable.voice_on);
+        }else{
+            findViewById(R.id.voice_btn).setBackgroundResource(R.drawable.voice_off);
+
+        }
+        Log.d(LOG_TAG,"Game:Resume");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mp.pause();
+        Log.d(LOG_TAG,"Game:Pause");
+    }
+
     public void onBackPressed(){
         Log.d(LOG_TAG, "Game:onBackPressed");
         soundPool.play(onAlert, 1.0F, 1.0F, 0, 0, 1.0F);
@@ -158,20 +186,6 @@ public class MainList extends Activity {
             }
         });
         dialog.show();
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        mp.start();
-        Log.d(LOG_TAG,"Game:Resume");
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        mp.pause();
-        Log.d(LOG_TAG,"Game:Pause");
     }
 
 }

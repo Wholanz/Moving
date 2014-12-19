@@ -4,16 +4,16 @@
     <!-- group1 -->
     <group android:id="@+id/group1">
         <item android:id="@+id/mi1"
-              android:title="item1"/>
+              android:title="View history"/>
         <item android:id="@+id/mi2"
-              android:title="item2"/>
+              android:title="Close BGM"/>
     </group>
     <!-- group 2 -->
     <group android:id="@+id/group2">
         <item android:id="@+id/mi3"
-              android:title="item3"/>
+              android:title="Contact us"/>
         <item android:id="@+id/mi4"
-              android:title="item4"/>
+              android:title="Exit"/>
     </group>
 
 </menu>
