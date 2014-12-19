@@ -55,6 +55,7 @@ public class AboutUs extends Activity {
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(++position).changeItemTo(0);
                     list.get(++position).changeItemTo(0);
+                    findViewById(R.id.imageView).setBackgroundResource(R.drawable.info1);
                 }
                 if(item.getName()==HLZ){
                     Log.d(LOG_TAG, "Choose Hlz");
@@ -62,6 +63,7 @@ public class AboutUs extends Activity {
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(position-1).changeItemTo(0);
                     list.get(position+1).changeItemTo(0);
+                    findViewById(R.id.imageView).setBackgroundResource(R.drawable.info2);
                 }
                 if(item.getName()==ZJY){
                     Log.d(LOG_TAG, "Choose Zjy");
@@ -69,6 +71,7 @@ public class AboutUs extends Activity {
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(--position).changeItemTo(0);
                     list.get(--position).changeItemTo(0);
+                    findViewById(R.id.imageView).setBackgroundResource(R.drawable.info3);
                 }
                 ItemAdapter tmp=new ItemAdapter(AboutUs.this,R.layout.main_list_item, list);
                 listView.setAdapter(tmp);
