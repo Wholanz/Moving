@@ -23,7 +23,8 @@ public class Opening extends Activity {
     private int clickStart;
     private int lovelive;
     private final static String LOG_TAG="StartApp";
-    MediaPlayer mp;
+    private MediaPlayer mp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

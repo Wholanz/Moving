@@ -7,11 +7,13 @@ import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +26,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,14 +36,21 @@ public class GameActivity extends Activity implements OnTouchListener {
 
 	private final static String LOG_TAG="Game Activity";
 	
-	int screenWidth;  
-    int screenHeight;  
-    int lastX;  
-    int lastY; 
+	private int screenWidth;
+	private int screenHeight;
+	private int lastX;
+	private int lastY;
 	private TextView timeText;
 	private ImageView image;
 	private Timer timer = new Timer();
 	private Timer TimerMove;
+	private Button restart;
+	private Button resume;
+	private Button music;
+	private MediaPlayer mp;
+
+	private boolean musicOn=true;
+	private boolean gameOn=true;
 
 	private int onClick;
 	private SoundPool soundPool;
@@ -61,8 +71,6 @@ public class GameActivity extends Activity implements OnTouchListener {
 	private float speedX = 0, speedY = 0;
 	private SensorEventListener listener;
 	
-	
-	
 	private TimerTask timerTask = new TimerTask(){
     	public void run(){
     		Message msg = new Message();
@@ -80,10 +88,51 @@ public class GameActivity extends Activity implements OnTouchListener {
 		soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
 		onClick=soundPool.load(this,R.raw.normalclick,1);
 
+		mp=MediaPlayer.create(this,R.raw.main_music);
+		mp.setLooping(true);
+		mp.start();
+
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 
         screenWidth = dm.widthPixels;  
         screenHeight = dm.heightPixels - 50;
+
+		restart=(Button)findViewById(R.id.restart_btn);
+		resume=(Button)findViewById(R.id.game_btn);
+		music=(Button)findViewById(R.id.voice_btn);
+
+		restart.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+         	//TODO:restart the game
+			}
+		});
+
+		resume.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(gameOn)
+					findViewById(R.id.game_btn).setBackgroundResource(R.drawable.resume);
+				else
+					findViewById(R.id.game_btn).setBackgroundResource(R.drawable.ongoing);
+				//TODO:pause the game
+				gameOn=!gameOn;
+			}
+		});
+
+		music.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(musicOn) {
+					mp.pause();
+					findViewById(R.id.voice_btn).setBackgroundResource(R.drawable.voice_off);
+				}else {
+					mp.start();
+					findViewById(R.id.voice_btn).setBackgroundResource(R.drawable.voice_on);
+				}
+				musicOn=!musicOn;
+			}
+		});
 
         timeText=(TextView)findViewById(R.id.time);
         timeText.setText("60");
@@ -168,6 +217,8 @@ public class GameActivity extends Activity implements OnTouchListener {
 			}
 		};
 		TimerMove.schedule(moveTask, 5, 5);
+
+
 	}
 
 	@Override
@@ -235,6 +286,7 @@ public class GameActivity extends Activity implements OnTouchListener {
 	        }  
 	        return false;     
 	 }
+
 
 
 //	Message msg= new Message();
@@ -366,7 +418,30 @@ public class GameActivity extends Activity implements OnTouchListener {
 	public void onBackPressed(){
 		Log.d(LOG_TAG, "onBackPressed");
 		soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+		Intent intent=new Intent(GameActivity.this,MainList.class);
+		startActivity(intent);
+		overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 		finish();
+	}
+
+	public void onResume(){
+		super.onResume();
+		if(musicOn==true)
+		{
+			mp.start();
+			findViewById(R.id.voice_btn).setBackgroundResource(R.drawable.voice_on);
+		}else{
+			findViewById(R.id.voice_btn).setBackgroundResource(R.drawable.voice_off);
+
+		}
+		Log.d(LOG_TAG,"Game:Resume");
+	}
+
+	@Override
+	public void onPause(){
+		super.onPause();
+		mp.pause();
+		Log.d(LOG_TAG,"Game:Pause");
 	}
 
 }

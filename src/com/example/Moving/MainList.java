@@ -67,6 +67,7 @@ public class MainList extends Activity {
                     Intent intent = new Intent(MainList.this, GameActivity.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
                 if(item.getName()==CHOOSE_STAGE) {
                     Log.d(LOG_TAG, "GameList:Choose Stage");

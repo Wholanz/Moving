@@ -20,13 +20,13 @@
         <Button
                 android:id="@+id/game_btn"
                 android:background="@drawable/ongoing"
-                android:layout_toLeftOf="@id/voice_btn"
+                android:layout_toLeftOf="@+id/voice_btn"
                 android:layout_centerVertical="true"
                 android:layout_width="60dp" android:layout_height="60dp"/>
         <Button
                 android:id="@+id/restart_btn"
                 android:background="@drawable/restart"
-                android:layout_toLeftOf="@id/game_btn"
+                android:layout_toLeftOf="@+id/game_btn"
                 android:layout_centerVertical="true"
                 android:layout_width="60dp" android:layout_height="60dp"/>
     </RelativeLayout>
