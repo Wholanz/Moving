@@ -35,11 +35,11 @@ public class MainList extends Activity {
 
     private int onClick;
     private int onAlert;
-    private boolean isVoiceOn=true;
     private Button voiceButton;
     private MediaPlayer mp;
     private SoundPool soundPool;
 
+    private static boolean isVoiceOn=true;
     public static int difficulty=1;
 
     private List<MainListItem>mainList=new ArrayList<MainListItem>();

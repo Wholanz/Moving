@@ -36,14 +36,13 @@ public class Difficulty extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.difficulty);
 
-        initList();
+        soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
+        onClick=soundPool.load(this,R.raw.normalclick,1);
 
+        initList();
         final ItemAdapter adapter=new ItemAdapter(Difficulty.this,R.layout.main_list_item, list);
         final ListView listView=(ListView)findViewById(R.id.main_list);
         listView.setAdapter(adapter);
-
-        soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
-        onClick=soundPool.load(this,R.raw.normalclick,1);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
