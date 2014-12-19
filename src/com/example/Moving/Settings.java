@@ -1,6 +1,7 @@
 package com.example.Moving;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -24,10 +25,15 @@ public class Settings extends Activity {
         onClick=soundPool.load(this,R.raw.normalclick,1);
     }
 
+
+
     @Override
     public void onBackPressed(){
         Log.d(LOG_TAG, "onBackPressed");
         soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+        Intent intent=new Intent(Settings.this,MainList.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         finish();
     }
 }

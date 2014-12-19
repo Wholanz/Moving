@@ -41,7 +41,6 @@ public class MainList extends Activity {
     private SoundPool soundPool;
 
     public static int difficulty=1;
-    private boolean[] stage=new boolean[6];
 
     private List<MainListItem>mainList=new ArrayList<MainListItem>();
     @Override
@@ -68,7 +67,6 @@ public class MainList extends Activity {
                     Intent intent = new Intent(MainList.this, GameActivity.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
-                    finish();
                 }
                 if(item.getName()==CHOOSE_STAGE) {
                     Log.d(LOG_TAG, "GameList:Choose Stage");

@@ -137,6 +137,9 @@ public class ChooseStage extends Activity implements View.OnClickListener{
     public void onBackPressed(){
         Log.d(LOG_TAG, "onBackPressed");
         soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+        Intent intent=new Intent(ChooseStage.this,MainList.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         finish();
     }
 

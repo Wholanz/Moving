@@ -3,14 +3,13 @@ package com.example.Moving;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 
 public class LevelDatabaseHelper extends SQLiteOpenHelper {
 
 	private final static String LOG_TAG="Database Helper";
 	
-	private Context mContext;
+	private Context context;
 
 	private final String CREATE_TABLE_PERMISSION = 
 	"create table levellock(id integer primary key autoincrement,"
@@ -20,14 +19,13 @@ public class LevelDatabaseHelper extends SQLiteOpenHelper {
 	+")";
 	public LevelDatabaseHelper(Context context,String name,int version) {
 		super(context,name,null,version);
-		mContext = context;
+		this.context = context;
 	}
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_TABLE_PERMISSION);
 		initDatabase(db);
-		//Toast.makeText(mContext, "Database create success!", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -35,11 +33,8 @@ public class LevelDatabaseHelper extends SQLiteOpenHelper {
 		switch(oldversion){
 		
 		}
-		
 	}
-	
-	
-	
+
 	public void initDatabase(SQLiteDatabase db){
 		final String insertion = "insert into levellock(level,"
 				+ "lock,difficulty) "

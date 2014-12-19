@@ -24,7 +24,7 @@ public class Difficulty extends Activity {
     private final static String Normal="Normal";
     private final static String HARD="Hard";
 
-    private  int level=1;
+    private static int level=1;
     private int onClick;
     private SoundPool soundPool;
 
@@ -78,12 +78,22 @@ public class Difficulty extends Activity {
     }
 
     private void initList(){
-        MainListItem hard=new MainListItem(HARD,R.drawable.hard,0);
-        MainListItem normal=new MainListItem(Normal,R.drawable.normal,0);
-        MainListItem easy=new MainListItem(EASY,R.drawable.easy,R.drawable.tick);
+        MainListItem hard=new MainListItem(HARD,R.drawable.hard,getTick(HARD));
+        MainListItem normal=new MainListItem(Normal,R.drawable.normal,getTick(Normal));
+        MainListItem easy=new MainListItem(EASY,R.drawable.easy,getTick(EASY));
         list.add(easy);
         list.add(normal);
         list.add(hard);
+    }
+
+    private int getTick(String name){
+        if(name==HARD && level==3)
+            return R.drawable.tick;
+        if(name==Normal&&level==2)
+            return R.drawable.tick;
+        if(name==EASY&&level==1)
+            return R.drawable.tick;
+        return 0;
     }
 
     @Override
