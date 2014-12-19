@@ -28,6 +28,7 @@
         <activity android:name=".Difficulty"/>
         <activity android:name=".GameType"/>
         <activity android:name=".Settings"/>
+        <activity android:name=".Stage1"/>
 
     </application>
 </manifest>

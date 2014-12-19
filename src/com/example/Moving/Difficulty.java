@@ -1,6 +1,7 @@
 package com.example.Moving;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class Difficulty extends Activity {
     private final static String Normal="Normal";
     private final static String HARD="Hard";
 
+    private  int level=1;
     private int onClick;
     private SoundPool soundPool;
 
@@ -50,18 +52,21 @@ public class Difficulty extends Activity {
                 MainListItem item=list.get(position);
                 if(item.getName()==EASY){
                     Log.d(LOG_TAG, "Easy mod");
+                    level=1;
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(++position).changeItemTo(0);
                     list.get(++position).changeItemTo(0);
                 }
                 if(item.getName()==Normal){
                     Log.d(LOG_TAG, "Normal mod");
+                    level=2;
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(position-1).changeItemTo(0);
                     list.get(position+1).changeItemTo(0);
                 }
                 if(item.getName()==HARD){
                     Log.d(LOG_TAG, "Hard mod");
+                    level=3;
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(--position).changeItemTo(0);
                     list.get(--position).changeItemTo(0);
@@ -72,9 +77,6 @@ public class Difficulty extends Activity {
         });
     }
 
-
-
-
     private void initList(){
         MainListItem hard=new MainListItem(HARD,R.drawable.hard,0);
         MainListItem normal=new MainListItem(Normal,R.drawable.normal,0);
@@ -84,11 +86,14 @@ public class Difficulty extends Activity {
         list.add(hard);
     }
 
-
     @Override
     public void onBackPressed(){
         Log.d(LOG_TAG, "onBackPressed");
         soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+        MainList.difficulty=level;
+        Intent intent=new Intent(Difficulty.this,MainList.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         finish();
     }
 }

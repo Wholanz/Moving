@@ -4,7 +4,32 @@
     android:background="@drawable/back"
         >
 
-    <include layout="@layout/title"></include>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+        <ImageView
+                android:id="@+id/title"
+                android:background="@drawable/title"
+                android:layout_width="fill_parent" android:layout_height="80dp"
+                />
+        <Button
+                android:id="@+id/voice_btn"
+                android:background="@drawable/voice_on"
+                android:layout_width="60dp" android:layout_height="60dp" android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+        <Button
+                android:id="@+id/game_btn"
+                android:background="@drawable/ongoing"
+                android:layout_toLeftOf="@id/voice_btn"
+                android:layout_centerVertical="true"
+                android:layout_width="60dp" android:layout_height="60dp"/>
+        <Button
+                android:id="@+id/restart_btn"
+                android:background="@drawable/restart"
+                android:layout_toLeftOf="@id/game_btn"
+                android:layout_centerVertical="true"
+                android:layout_width="60dp" android:layout_height="60dp"/>
+    </RelativeLayout>
 
     <TextView
         android:id = "@+id/time"

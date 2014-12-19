@@ -3,6 +3,7 @@ package com.example.Moving;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -47,6 +48,9 @@ public class AboutUs extends Activity {
     public void onBackPressed(){
         Log.d(LOG_TAG, "onBackPressed");
         soundPool.play(onClick, 1.0F, 1.0F, 0, 0, 1.0F);
+        Intent intent=new Intent(AboutUs.this,MainList.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
         finish();
     }
 

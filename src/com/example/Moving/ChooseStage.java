@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Created by tiny on 12/19/14.
@@ -79,7 +80,11 @@ public class ChooseStage extends Activity implements View.OnClickListener{
         if(!isLock(v)){
             Log.v(LOG_TAG,"Start!");
             switch (v.getId()){
-                case R.id.button1:break;
+                case R.id.button1:
+                    Intent intent=new Intent(ChooseStage.this,Stage1.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.roomin,R.anim.roomout);
+                    break;
                 case R.id.button2:break;
                 case R.id.button3:break;
                 case R.id.button4:break;
@@ -87,6 +92,8 @@ public class ChooseStage extends Activity implements View.OnClickListener{
                 case R.id.button6:break;
                 default:break;
             }
+        }else {
+            Toast.makeText(this.getApplicationContext(), "You have not unlock the stage...", Toast.LENGTH_SHORT).show();
         }
     }
 

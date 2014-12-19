@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,6 @@ import java.util.List;
  */
 public class MainList extends Activity {
     private final static String LOG_TAG="MainList";
-
     private final static String NEW_GAME="New Game";
     private final static String CHOOSE_STAGE="Choose Stage";
     private final static String DIFFICULTY="Difficulty";
@@ -40,7 +40,7 @@ public class MainList extends Activity {
     private MediaPlayer mp;
     private SoundPool soundPool;
 
-    private int difficulty=1;
+    public static int difficulty=1;
     private boolean[] stage=new boolean[6];
 
     private List<MainListItem>mainList=new ArrayList<MainListItem>();
@@ -49,6 +49,9 @@ public class MainList extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main_list);
+
+        //Toast.makeText(this.getApplicationContext(), Integer.toString(difficulty), Toast.LENGTH_SHORT).show();
+
         initList();
         ItemAdapter adapter=new ItemAdapter(MainList.this,R.layout.main_list_item,mainList);
         final ListView listView=(ListView)findViewById(R.id.main_list);
@@ -64,31 +67,43 @@ public class MainList extends Activity {
                     Log.d(LOG_TAG, "GameList:New Game");
                     Intent intent = new Intent(MainList.this, GameActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
                 if(item.getName()==CHOOSE_STAGE) {
                     Log.d(LOG_TAG, "GameList:Choose Stage");
                     Intent intent = new Intent(MainList.this, ChooseStage.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
                 if(item.getName()==DIFFICULTY) {
                     Log.d(LOG_TAG, "GameList:Difficulty");
                     Intent intent = new Intent(MainList.this, Difficulty.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
                 if(item.getName()==GAME_TYPE) {
                     Log.d(LOG_TAG, "GameList:Game Type");
                     Intent intent = new Intent(MainList.this, GameType.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
                 if(item.getName()==SETTINGS) {
                     Log.d(LOG_TAG, "GameList:Settings");
                     Intent intent = new Intent(MainList.this, Settings.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
                 if(item.getName()==ABOUT_US) {
                     Log.d(LOG_TAG, "GameList:About Us");
                     Intent intent = new Intent(MainList.this, AboutUs.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
+                    finish();
                 }
 
             }
