@@ -21,6 +21,7 @@ public class Opening extends Activity {
     private ImageView imageView;
     private SoundPool soundPool;
     private int clickStart;
+    private int lovelive;
     private final static String LOG_TAG="StartApp";
     MediaPlayer mp;
     @Override
@@ -35,11 +36,12 @@ public class Opening extends Activity {
         imageView=(ImageView)findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.opening);
 
-        mp=MediaPlayer.create(this,R.raw.moving_bgm);
-        mp.start();
+        mp=MediaPlayer.create(this,R.raw.cutie_panther);
+        mp.setLooping(true);
 
         soundPool=new SoundPool(1, AudioManager.STREAM_MUSIC,5);
         clickStart=soundPool.load(this,R.raw.click,1);
+        lovelive=soundPool.load(this,R.raw.lovelive,1);
 
         //Edit the animation when the game starts
         final AlphaAnimation pictureIn = new AlphaAnimation(0,1.0f);
@@ -51,6 +53,8 @@ public class Opening extends Activity {
         pictureIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
+                soundPool.play(lovelive,1.0F, 1.0F, 0, 0, 1.0F);
+                mp.start();
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -72,7 +76,7 @@ public class Opening extends Activity {
         pictureOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                mp.pause();
+                //mp.pause();
                 Log.d(LOG_TAG,"Game:Direct to the next activity");
                 Intent intent = new Intent(Opening.this, MainList.class);
                 startActivity(intent);
@@ -107,7 +111,7 @@ public class Opening extends Activity {
     @Override
     public void onPause(){
         super.onPause();
-        mp.pause();
+         mp.pause();
         Log.d(LOG_TAG,"Game:Pause");
     }
 }
