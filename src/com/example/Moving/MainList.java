@@ -62,10 +62,36 @@ public class MainList extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MainListItem item=mainList.get(position);
                 if(item.getName()==NEW_GAME) {
-                    Log.d(LOG_TAG, "GameList:Direct to the new game");
+                    Log.d(LOG_TAG, "GameList:New Game");
                     Intent intent = new Intent(MainList.this, GameActivity.class);
                     startActivity(intent);
                 }
+                if(item.getName()==CHOOSE_STAGE) {
+                    Log.d(LOG_TAG, "GameList:Choose Stage");
+                    Intent intent = new Intent(MainList.this, ChooseStage.class);
+                    startActivity(intent);
+                }
+                if(item.getName()==DIFFICULTY) {
+                    Log.d(LOG_TAG, "GameList:Difficulty");
+                    Intent intent = new Intent(MainList.this, Difficulty.class);
+                    startActivity(intent);
+                }
+                if(item.getName()==GAME_TYPE) {
+                    Log.d(LOG_TAG, "GameList:Game Type");
+                    Intent intent = new Intent(MainList.this, GameType.class);
+                    startActivity(intent);
+                }
+                if(item.getName()==SETTINGS) {
+                    Log.d(LOG_TAG, "GameList:Settings");
+                    Intent intent = new Intent(MainList.this, Settings.class);
+                    startActivity(intent);
+                }
+                if(item.getName()==ABOUT_US) {
+                    Log.d(LOG_TAG, "GameList:About Us");
+                    Intent intent = new Intent(MainList.this, AboutUs.class);
+                    startActivity(intent);
+                }
+
             }
         });
 

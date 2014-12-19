@@ -37,9 +37,6 @@ public class GameActivity extends Activity implements OnTouchListener {
 	private Timer timer = new Timer();
 	private Timer TimerMove;
 
-	private int paddingTop=1;
-
-
 	private final static int TIME_1S = 1;
 	private final static int RESET_TIME = 2;
 	private final static int ACCELERATOR_START = 3;
@@ -72,7 +69,6 @@ public class GameActivity extends Activity implements OnTouchListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.game);
 
-		paddingTop=findViewById(R.id.title).getHeight();
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 
@@ -235,15 +231,16 @@ public class GameActivity extends Activity implements OnTouchListener {
 //	msg.what = ACCELERATOR_START;
 //
 	    private Handler handler = new Handler(){
-	    	public void handleMessage(Message msg){
-	    		switch(msg.what){
+		public void handleMessage(Message msg){
+			int paddingTop=findViewById(R.id.title).getHeight()+10;
+			int paddingSide=10;
+			switch(msg.what){
 	    		case TIME_1S:
 	    			int timeLeft = Integer.parseInt(timeText.getText().toString()) - 1;
 	    			timeText.setText(Integer.toString(timeLeft));
 	    			if(timeLeft == 0){
 	    			timer.cancel();
 	    			gameOver.setMessage("Time is up! Again ?");
-//	    			Log.v("heheheheehe",""+timeLeft);
 	    			gameOver.show();
 	    			}
 	    			break;
@@ -308,13 +305,13 @@ public class GameActivity extends Activity implements OnTouchListener {
 		            int right = v.getRight() + dx;  
 		            int bottom = v.getBottom() + dy;
 		            
-		            if(left < 20){  
-		                left = 20;  
+		            if(left < paddingSide){  
+		                left = paddingSide;  
 		                right = left + v.getWidth();
 		                speedX = 0;
 		            }                     
-		            if(right > screenWidth-20){  
-		                right = screenWidth-20;  
+		            if(right > screenWidth-paddingSide){  
+		                right = screenWidth-paddingSide;  
 		                left = right - v.getWidth();  
 		                speedX = 0;
 		            }                     
@@ -323,8 +320,8 @@ public class GameActivity extends Activity implements OnTouchListener {
 		                bottom = top + v.getHeight();  
 		                speedY = 0;
 		            }                     
-		            if(bottom > screenHeight-20){  
-		                bottom = screenHeight-20;  
+		            if(bottom > screenHeight-paddingSide){  
+		                bottom = screenHeight-paddingSide;  
 		                top = bottom - v.getHeight();
 		                speedY = 0;
 		            }   
@@ -334,7 +331,6 @@ public class GameActivity extends Activity implements OnTouchListener {
 	    		case COLLISION:
 	    			timer.cancel();
 	    			gameOver.setMessage("You failed! Try again?");
-//	    			gameOver.show();
 	    			break;
 	    			
 	    		case NEXT_LEVEL:
