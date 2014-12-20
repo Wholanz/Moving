@@ -34,13 +34,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 @SuppressLint("NewApi")
 public class OnGame extends Activity implements OnTouchListener,OnClickListener {
@@ -87,7 +81,7 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 	private float speedX = 0, speedY = 0;
 	private SensorEventListener listener;
 	
-	private ArrayMap arrayMap;
+	private TinyMap arrayMap;
 
 	private TimerTask timerTask = new TimerTask(){
     	public void run(){
@@ -120,6 +114,8 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 			}
 		});
 
+		setLayout(findViewById(R.id.image),200,450);
+
 		resume.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -149,10 +145,11 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();  
         screenWidth = dm.widthPixels;  
-        screenHeight = dm.heightPixels - 50;  
-        timeText=(TextView)findViewById(R.id.time);
-        timeText.setText("60");
-        
+        screenHeight = dm.heightPixels - 50;
+
+		timeText=(TextView)findViewById(R.id.time);
+		timeText.setText("60");
+
         image = (ImageView)findViewById(R.id.image);
         image.setOnTouchListener(this); 
         
@@ -240,9 +237,6 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 		NewLevel();
 		
 	}
-	
-	
-	
 
 	public void onWindowFocusChanged(boolean hasFocus) {
 
@@ -506,7 +500,7 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 	        	return;
 	        }
 	        else
-	        arrayMap = new ArrayMap((difficulty+1)*8,level++,b_size);;
+	        arrayMap = new TinyMap((difficulty+1)*8,level++,b_size);
 	        
 	        removeImage();
 	        putImage(b_size);
@@ -605,8 +599,8 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 	      int height = image.getBottom() - image.getTop();
 	      int width  = image.getRight() - image.getLeft();
 	      Log.v("hehe",""+arrayMap.getStart());
-	      image.layout(arrayMap.getStart().x - width/2, arrayMap.getStart().y - height /2,arrayMap.getStart().x - width/2 + width , arrayMap.getStart().y - height/2 + height);
-	      
+	     // image.layout(arrayMap.getStart().x - width/2, arrayMap.getStart().y - height /2,arrayMap.getStart().x - width/2 + width , arrayMap.getStart().y - height/2 + height);
+			setLayout(findViewById(R.id.image),200,450);
 		}
 		
 //		public boolean Arrive(){
@@ -654,6 +648,14 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 		SQLiteDatabase db;
 		db=databaseHelper.getReadableDatabase();
 		LevelDatabaseHelper.Unlock(db,0,0);
+	}
+
+	public static void setLayout(View view,int x,int y)
+	{
+		ViewGroup.MarginLayoutParams margin=new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+		margin.setMargins(x,y, x+margin.width, y+margin.height);
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin);
+		view.setLayoutParams(layoutParams);
 	}
 
 }

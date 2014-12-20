@@ -32,11 +32,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener {
-	
+
 //	private Map map;
 
 	private final static String LOG_TAG="Game Activity";
-	
+
 	private int screenWidth;
 	private int screenHeight;
 	private int lastX;
@@ -63,23 +63,23 @@ public class GameActivity extends Activity implements OnTouchListener {
 	private final static int MOVE_IMAGE = 5;
 	private final static int COLLISION = 6;
 	private final static int NEXT_LEVEL = 7;
-	
+
 	private Builder gameOver ,nextLevel;
-	
+
 	private SensorManager SManager ;
 	private Sensor sensor ;
 	private float acceleratorX = 0, acceleratorY = 0;
 	private float speedX = 0, speedY = 0;
 	private SensorEventListener listener;
-	
+
 	private TimerTask timerTask = new TimerTask(){
-    	public void run(){
-    		Message msg = new Message();
-    		msg.what = TIME_1S;
-    		handler.sendMessage(msg);
-    	}
-    };
-	
+		public void run(){
+			Message msg = new Message();
+			msg.what = TIME_1S;
+			handler.sendMessage(msg);
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,8 +95,8 @@ public class GameActivity extends Activity implements OnTouchListener {
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 
-        screenWidth = dm.widthPixels;  
-        screenHeight = dm.heightPixels - 50;
+		screenWidth = dm.widthPixels;
+		screenHeight = dm.heightPixels - 50;
 
 		restart=(Button)findViewById(R.id.restart_btn);
 		resume=(Button)findViewById(R.id.game_btn);
@@ -105,7 +105,7 @@ public class GameActivity extends Activity implements OnTouchListener {
 		restart.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-         	//TODO:restart the game
+				//TODO:restart the game
 			}
 		});
 
@@ -135,58 +135,58 @@ public class GameActivity extends Activity implements OnTouchListener {
 			}
 		});
 
-        timeText=(TextView)findViewById(R.id.time);
-        timeText.setText("60");
-        image = (ImageView)findViewById(R.id.image);
-        image.setOnTouchListener(this);
-        
-        timer.schedule(timerTask, 1000,1000);
-          
-        gameOver = new Builder(GameActivity.this);
-        gameOver.setTitle("Game T_T Over!");
-        gameOver.setCancelable(false);
-        gameOver.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-		
+		timeText=(TextView)findViewById(R.id.time);
+		timeText.setText("60");
+		image = (ImageView)findViewById(R.id.image);
+		image.setOnTouchListener(this);
+
+		timer.schedule(timerTask, 1000,1000);
+
+		gameOver = new Builder(GameActivity.this);
+		gameOver.setTitle("Game T_T Over!");
+		gameOver.setCancelable(false);
+		gameOver.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface gameOver, int which) {
-				
+
 				MessageSend(RESET_TIME);
 //				BallStart();
 			}
 		});
-        
-        gameOver.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-			
+
+		gameOver.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface gameOver, int which) {
 				finish();
-				
+
 			}
 		});
-        
-        nextLevel = new Builder(GameActivity.this);
-        nextLevel.setTitle("Congratulations!^_^");
-        nextLevel.setCancelable(false);
-        nextLevel.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-			
+
+		nextLevel = new Builder(GameActivity.this);
+		nextLevel.setTitle("Congratulations!^_^");
+		nextLevel.setCancelable(false);
+		nextLevel.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface nextLevel, int which) {
 //				NewLevel();
 				MessageSend(RESET_TIME);
 //				BallStart();
-				
+
 			}
 		});
-        nextLevel.setNegativeButton("Rest", new DialogInterface.OnClickListener() {
-			
+		nextLevel.setNegativeButton("Rest", new DialogInterface.OnClickListener() {
+
 			@Override
 			public void onClick(DialogInterface nextLevel, int which) {
 				finish();
 			}
 		});
-        
-        SManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        sensor = SManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+		SManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+		sensor = SManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
 //      NewLevel();
 //      BallStart();
@@ -237,177 +237,177 @@ public class GameActivity extends Activity implements OnTouchListener {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
-	 @Override  
-	 public boolean onTouch(View v, MotionEvent event) {
-	        int action=event.getAction();  
-	        switch(action){  
-	        case MotionEvent.ACTION_DOWN:  
-	            lastX = (int) event.getRawX();  
-	            lastY = (int) event.getRawY();  
-	            break;  
-	        case MotionEvent.ACTION_MOVE:  
-	            int dx =(int)event.getRawX() - lastX;  
-	            int dy =(int)event.getRawY() - lastY;  
-	          
-	            int left = v.getLeft() + dx;  
-	            int top = v.getTop() + dy;  
-	            int right = v.getRight() + dx;  
-	            int bottom = v.getBottom() + dy;
-	            
+
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		int action=event.getAction();
+		switch(action){
+			case MotionEvent.ACTION_DOWN:
+				lastX = (int) event.getRawX();
+				lastY = (int) event.getRawY();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				int dx =(int)event.getRawX() - lastX;
+				int dy =(int)event.getRawY() - lastY;
+
+				int left = v.getLeft() + dx;
+				int top = v.getTop() + dy;
+				int right = v.getRight() + dx;
+				int bottom = v.getBottom() + dy;
+
 //	            if(IsCollision())
 //	            	MessageSend(COLLISION);
-	            
+
 //	            if(Arrive()){
 //	            	MessageSend(NEXT_LEVEL);
 //	            }
-	            if(left < 20){
-	                left = 20;  
-	                right = left + v.getWidth();  
-	            }                     
-	            if(right > screenWidth-20){  
-	                right = screenWidth-20;  
-	                left = right - v.getWidth();  
-	            }                     
-	            if(top < 100){  
-	                top = 100;  
-	                bottom = top + v.getHeight();  
-	            }                     
-	            if(bottom > screenHeight-20){  
-	                bottom = screenHeight-20;  
-	                top = bottom - v.getHeight();  
-	            }                     
-	            v.layout(left, top, right, bottom);  
-	            lastX = (int) event.getRawX();  
-	            lastY = (int) event.getRawY();                    
-	            break;  
-	        case MotionEvent.ACTION_UP:  
-	            break;                
-	        }  
-	        return false;     
-	 }
+				if(left < 20){
+					left = 20;
+					right = left + v.getWidth();
+				}
+				if(right > screenWidth-20){
+					right = screenWidth-20;
+					left = right - v.getWidth();
+				}
+				if(top < 100){
+					top = 100;
+					bottom = top + v.getHeight();
+				}
+				if(bottom > screenHeight-20){
+					bottom = screenHeight-20;
+					top = bottom - v.getHeight();
+				}
+				v.layout(left, top, right, bottom);
+				lastX = (int) event.getRawX();
+				lastY = (int) event.getRawY();
+				break;
+			case MotionEvent.ACTION_UP:
+				break;
+		}
+		return false;
+	}
 
 
 
-//	Message msg= new Message();
+	//	Message msg= new Message();
 //	msg.what = ACCELERATOR_START;
 //
-	    private Handler handler = new Handler(){
+	private Handler handler = new Handler(){
 		public void handleMessage(Message msg){
 			int paddingTop=findViewById(R.id.title).getHeight()+10;
 			int paddingSide=10;
 			switch(msg.what){
-	    		case TIME_1S:
-	    			int timeLeft = Integer.parseInt(timeText.getText().toString()) - 1;
-	    			timeText.setText(Integer.toString(timeLeft));
-	    			if(timeLeft == 0){
-	    			timer.cancel();
-	    			gameOver.setMessage("Time is up! Again ?");
-	    			gameOver.show();
-	    			}
-	    			break;
-	    		case RESET_TIME:
-	    			timeText.setText("10");
-	    			timer = new Timer();
-	    			timerTask = new TimerTask(){
-	    		    	public void run(){
-	    		    		Message msg = new Message();
-	    		    		msg.what = TIME_1S;
-	    		    		handler.sendMessage(msg);
-	    		    	}
-	    		    };
-	    			timer.schedule(timerTask, 1000,1000);
-	    			break;
-	    		case ACCELERATOR_START:
-	    			listener = new SensorEventListener() {
-	    				
-	    				@Override
-	    				public void onSensorChanged(SensorEvent event) {
-	    					acceleratorX = event.values[0];
-	    					acceleratorY = event.values[1];
-	    				}
-	    				
-	    				@Override
-	    				public void onAccuracyChanged(Sensor sensor, int accuracy) {
-	    				}
-	    			};
-	    			SManager.registerListener(listener, sensor,SensorManager.SENSOR_DELAY_FASTEST);
-	    			
-	    			TimerMove = new Timer();
-	    			TimerTask moveTask = new TimerTask() {
-						
+				case TIME_1S:
+					int timeLeft = Integer.parseInt(timeText.getText().toString()) - 1;
+					timeText.setText(Integer.toString(timeLeft));
+					if(timeLeft == 0){
+						timer.cancel();
+						gameOver.setMessage("Time is up! Again ?");
+						gameOver.show();
+					}
+					break;
+				case RESET_TIME:
+					timeText.setText("10");
+					timer = new Timer();
+					timerTask = new TimerTask(){
+						public void run(){
+							Message msg = new Message();
+							msg.what = TIME_1S;
+							handler.sendMessage(msg);
+						}
+					};
+					timer.schedule(timerTask, 1000,1000);
+					break;
+				case ACCELERATOR_START:
+					listener = new SensorEventListener() {
+
+						@Override
+						public void onSensorChanged(SensorEvent event) {
+							acceleratorX = event.values[0];
+							acceleratorY = event.values[1];
+						}
+
+						@Override
+						public void onAccuracyChanged(Sensor sensor, int accuracy) {
+						}
+					};
+					SManager.registerListener(listener, sensor,SensorManager.SENSOR_DELAY_FASTEST);
+
+					TimerMove = new Timer();
+					TimerTask moveTask = new TimerTask() {
+
 						@Override
 						public void run() {
-							
-				            Message msg = new Message();
-				            msg.what = MOVE_IMAGE;
-				            handler.sendMessage(msg);
-				              
+
+							Message msg = new Message();
+							msg.what = MOVE_IMAGE;
+							handler.sendMessage(msg);
+
 						}
 					};
 					TimerMove.schedule(moveTask, 5, 5);
-	    			break;
-	    		case ACCELERATOR_STOP:
-	    			SManager.unregisterListener(listener);
-	    			TimerMove.cancel();
-	    			speedX = speedY = acceleratorX = acceleratorY = 0;
-	    			break;
-	    		case MOVE_IMAGE:
-	    			if((speedX > 0 && acceleratorX < 0) || (speedX < 0 && acceleratorX >0))
-	    				speedX -= 0.5*acceleratorX;
-	    			else speedX -= 0.5* acceleratorX;
-	    			if((speedY > 0 && acceleratorY < 0) || (speedY < 0 && acceleratorY >0))
-	    				speedY += 0.5*acceleratorY;
-	    			else speedY += 0.5 * acceleratorY;
+					break;
+				case ACCELERATOR_STOP:
+					SManager.unregisterListener(listener);
+					TimerMove.cancel();
+					speedX = speedY = acceleratorX = acceleratorY = 0;
+					break;
+				case MOVE_IMAGE:
+					if((speedX > 0 && acceleratorX < 0) || (speedX < 0 && acceleratorX >0))
+						speedX -= 0.5*acceleratorX;
+					else speedX -= 0.5* acceleratorX;
+					if((speedY > 0 && acceleratorY < 0) || (speedY < 0 && acceleratorY >0))
+						speedY += 0.5*acceleratorY;
+					else speedY += 0.5 * acceleratorY;
 					int dx = (int)(speedX * 0.05);
-		            int dy = (int)(speedY * 0.05);
-		            View v = findViewById(R.id.image);
-		            int left = v.getLeft() + dx;  
-		            int top = v.getTop() + dy;  
-		            int right = v.getRight() + dx;  
-		            int bottom = v.getBottom() + dy;
-		            
-		            if(left < paddingSide){  
-		                left = paddingSide;  
-		                right = left + v.getWidth();
-		                speedX = 0;
-		            }                     
-		            if(right > screenWidth-paddingSide){  
-		                right = screenWidth-paddingSide;  
-		                left = right - v.getWidth();  
-		                speedX = 0;
-		            }                     
-		            if(top < paddingTop){
-		                top = paddingTop;
-		                bottom = top + v.getHeight();  
-		                speedY = 0;
-		            }                     
-		            if(bottom > screenHeight-paddingSide){  
-		                bottom = screenHeight-paddingSide;  
-		                top = bottom - v.getHeight();
-		                speedY = 0;
-		            }   
-		            v.layout(left, top, right, bottom);
-	    			break;
-	    		
-	    		case COLLISION:
-	    			timer.cancel();
-	    			gameOver.setMessage("You failed! Try again?");
-	    			break;
-	    			
-	    		case NEXT_LEVEL:
-	    			nextLevel.show();
-	    			break;
-	    			
-	    		}
-	    	}
-	    };
-		
+					int dy = (int)(speedY * 0.05);
+					View v = findViewById(R.id.image);
+					int left = v.getLeft() + dx;
+					int top = v.getTop() + dy;
+					int right = v.getRight() + dx;
+					int bottom = v.getBottom() + dy;
+
+					if(left < paddingSide){
+						left = paddingSide;
+						right = left + v.getWidth();
+						speedX = 0;
+					}
+					if(right > screenWidth-paddingSide){
+						right = screenWidth-paddingSide;
+						left = right - v.getWidth();
+						speedX = 0;
+					}
+					if(top < paddingTop){
+						top = paddingTop;
+						bottom = top + v.getHeight();
+						speedY = 0;
+					}
+					if(bottom > screenHeight-paddingSide){
+						bottom = screenHeight-paddingSide;
+						top = bottom - v.getHeight();
+						speedY = 0;
+					}
+					v.layout(left, top, right, bottom);
+					break;
+
+				case COLLISION:
+					timer.cancel();
+					gameOver.setMessage("You failed! Try again?");
+					break;
+
+				case NEXT_LEVEL:
+					nextLevel.show();
+					break;
+
+			}
+		}
+	};
+
 	public void MessageSend(int what){
-			Message msg = new Message();
-			msg.what = what;
-			handler.sendMessage(msg);
+		Message msg = new Message();
+		msg.what = what;
+		handler.sendMessage(msg);
 	}
 
 	public static int convertDpToPx(Context context, float dpValue) {
