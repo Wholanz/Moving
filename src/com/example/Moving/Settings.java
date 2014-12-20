@@ -59,11 +59,18 @@ public class Settings extends Activity {
                     list.get(++position).changeItemTo(0);
                     list.get(++position).changeItemTo(0);
 
-                    Intent data=new Intent(Intent.ACTION_SENDTO);
-                    data.setData(Uri.parse("mailto:zjutiny@gmail.com"));
-                    data.putExtra(Intent.EXTRA_SUBJECT, "GameFeedBack");
-                    data.putExtra(Intent.EXTRA_TEXT, "Feedback:\t\n");
-                    startActivity(data);
+//                    Intent data=new Intent(Intent.ACTION_SENDTO);
+//                    data.setData(Uri.parse("mailto:zjutiny@gmail.com"));
+//                    data.putExtra(Intent.EXTRA_SUBJECT, "GameFeedBack");
+//                    data.putExtra(Intent.EXTRA_TEXT, "Feedback:\t\n");
+//                    startActivity(data);
+
+                    try {
+                        GameMailSender.Send("ty", "testing");
+                    }catch (Exception e){
+                        Log.d(LOG_TAG,"Sending Failed");
+                        onBackPressed();
+                    }
                 }
                 if(item.getName()==VOLUME){
                     Log.d(LOG_TAG, "Volume");
