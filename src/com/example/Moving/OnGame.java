@@ -53,7 +53,7 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 	private int onClick;
 	private SoundPool soundPool;
 
-	private int difficulty = 0;
+	private int difficulty = MainList.difficulty-1;
 	private int screenWidth;
 	private int screenHeight;
 	private int lastX;
@@ -457,9 +457,10 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 	    			break;
 	    		case NEXT_LEVEL:
 	    			LevelDatabaseHelper dbhelper = new LevelDatabaseHelper(OnGame.this,"LevelData",1);
-	    			SQLiteDatabase db = dbhelper.getReadableDatabase();
-	    			db.execSQL("update levellock set lock=? where difficulty=? and level=?",
-	    					new Object[]{0,difficulty,level+1});	
+					SQLiteDatabase db = dbhelper.getReadableDatabase();
+//	    			db.execSQL("update levellock set lock=? where difficulty=? and level=?",
+//	    					new Object[]{0,difficulty,level+1});
+					LevelDatabaseHelper.Unlock(db,level,difficulty);
 	    			nextLevel.show();
 	    			break;
 	    		case BALL_START:
@@ -500,12 +501,12 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 			//int height = size.y;
 
 	        int b_size =(int) ((20 * width  / 320)  * 0.9);//直接通过分辨率和bp算px
-	        if(level==6){
+	        if(level==5){
 	        	Toast.makeText(OnGame.this, "You win!", Toast.LENGTH_SHORT).show();
 	        	return;
 	        }
 	        else
-	        arrayMap = new ArrayMap((difficulty+1)*8,++level,b_size);;
+	        arrayMap = new ArrayMap((difficulty+1)*8,level++,b_size);;
 	        
 	        removeImage();
 	        putImage(b_size);
@@ -527,6 +528,10 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 	        		Bitmap.createScaledBitmap(
 	        				BitmapFactory.decodeResource(this.getBaseContext().getResources(), R.drawable.testbmp2), 
 	        		b_size, b_size, true);
+			Bitmap test3 =
+					Bitmap.createScaledBitmap(
+							BitmapFactory.decodeResource(this.getBaseContext().getResources(), R.drawable.testbmp3),
+							b_size, b_size, true);
 	        
 	        
 	        for(int rowC = 0; rowC < 21; rowC++)
@@ -562,6 +567,7 @@ public class OnGame extends Activity implements OnTouchListener,OnClickListener 
 			        	break;
 			        case 3://终点
 			        	//hole[colC].setImageResource(R.drawable.test4);
+						hole[colC].setImageBitmap(test3);
 			        	break;
 			        }
 			        
