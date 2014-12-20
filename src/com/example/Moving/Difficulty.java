@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class Difficulty extends Activity {
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(++position).changeItemTo(0);
                     list.get(++position).changeItemTo(0);
+                    Toast.makeText(getApplicationContext(), "Easy Mod On", Toast.LENGTH_SHORT).show();
                 }
                 if(item.getName()==Normal){
                     Log.d(LOG_TAG, "Normal mod");
@@ -62,6 +64,7 @@ public class Difficulty extends Activity {
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(position-1).changeItemTo(0);
                     list.get(position+1).changeItemTo(0);
+                    Toast.makeText(getApplicationContext(), "Normal Mod On", Toast.LENGTH_SHORT).show();
                 }
                 if(item.getName()==HARD){
                     Log.d(LOG_TAG, "Hard mod");
@@ -69,6 +72,7 @@ public class Difficulty extends Activity {
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(--position).changeItemTo(0);
                     list.get(--position).changeItemTo(0);
+                    Toast.makeText(getApplicationContext(), "Hard Mod On", Toast.LENGTH_SHORT).show();
                 }
                 ItemAdapter tmp=new ItemAdapter(Difficulty.this,R.layout.main_list_item, list);
                 listView.setAdapter(tmp);

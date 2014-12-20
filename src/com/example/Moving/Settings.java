@@ -10,11 +10,10 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +113,7 @@ public class Settings extends Activity {
                             db=databaseHelper.getReadableDatabase();
                             LevelDatabaseHelper.resetDatabase(db);
 
+                            Toast.makeText(getApplicationContext(), "History Cleared", Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

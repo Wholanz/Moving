@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +52,14 @@ public class GameType extends Activity {
                     isGravity=false;
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(--position).changeItemTo(0);
+                    Toast.makeText(getApplicationContext(), "Finger Mod On", Toast.LENGTH_SHORT).show();
                 }
                 if(item.getName()==GRAVITY){
                     Log.d(LOG_TAG, "Gravity mod");
                     isGravity=true;
                     list.get(position).changeItemTo(R.drawable.tick);
                     list.get(++position).changeItemTo(0);
+                    Toast.makeText(getApplicationContext(), "Gravity Mod On", Toast.LENGTH_SHORT).show();
                 }
 
                 ItemAdapter tmp=new ItemAdapter(GameType.this,R.layout.main_list_item, list);

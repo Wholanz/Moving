@@ -65,7 +65,8 @@ public class MainList extends Activity {
                 MainListItem item=mainList.get(position);
                 if(item.getName()==NEW_GAME) {
                     Log.d(LOG_TAG, "GameList:New Game");
-                    Intent intent = new Intent(MainList.this, GameActivity.class);
+                    //Intent intent = new Intent(MainList.this, GameActivity.class);
+                    Intent intent = new Intent(MainList.this, OnGame.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.in_from_right,R.anim.out_to_left);
                     finish();
