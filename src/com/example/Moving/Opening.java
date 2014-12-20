@@ -34,6 +34,7 @@ public class Opening extends Activity {
         setContentView(view);
         //Play the BGM when first activity starts
 
+
         imageView=(ImageView)findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.opening);
 

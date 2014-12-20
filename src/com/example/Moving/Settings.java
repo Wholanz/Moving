@@ -1,7 +1,10 @@
 package com.example.Moving;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,18 +63,20 @@ public class Settings extends Activity {
                     list.get(++position).changeItemTo(0);
                     list.get(++position).changeItemTo(0);
 
-//                    Intent data=new Intent(Intent.ACTION_SENDTO);
-//                    data.setData(Uri.parse("mailto:zjutiny@gmail.com"));
-//                    data.putExtra(Intent.EXTRA_SUBJECT, "GameFeedBack");
-//                    data.putExtra(Intent.EXTRA_TEXT, "Feedback:\t\n");
-//                    startActivity(data);
+                    //use installed application
+                    Intent data=new Intent(Intent.ACTION_SENDTO);
+                    data.setData(Uri.parse("mailto:zjutiny@gmail.com"));
+                    data.putExtra(Intent.EXTRA_SUBJECT, "GameFeedBack");
+                    data.putExtra(Intent.EXTRA_TEXT, "Feedback:\t\n");
+                    startActivity(data);
 
-                    try {
-                        GameMailSender.Send("ty", "testing");
-                    }catch (Exception e){
-                        Log.d(LOG_TAG,"Sending Failed");
-                        onBackPressed();
-                    }
+                    //TODO:change the method of sending email by javax.mail
+//                    try {
+//                        GameMailSender.Send("ty", "testing");
+//                    }catch (Exception e){
+//                        Log.d(LOG_TAG,"Sending Failed");
+//                        onBackPressed();
+//                    }
                 }
                 if(item.getName()==VOLUME){
                     Log.d(LOG_TAG, "Volume");
@@ -95,6 +101,28 @@ public class Settings extends Activity {
                     list.get(--position).changeItemTo(0);
                     list.get(--position).changeItemTo(0);
                     list.get(--position).changeItemTo(0);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+                    builder.setMessage("Confirm Clearing the History");
+                    builder.setTitle("WyTiny.Game");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            LevelDatabaseHelper databaseHelper;
+                            databaseHelper = new LevelDatabaseHelper(Settings.this,"LevelData",1);
+                            SQLiteDatabase db;
+                            db=databaseHelper.getReadableDatabase();
+                            LevelDatabaseHelper.resetDatabase(db);
+
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                         }
+                    });
+                    builder.create().show();
                 }
                 ItemAdapter tmp=new ItemAdapter(Settings.this,R.layout.main_list_item, list);
                 listView.setAdapter(tmp);
@@ -103,26 +131,14 @@ public class Settings extends Activity {
     }
 
     private void initList(){
-        MainListItem email=new MainListItem(CONTACT_US,R.drawable.email,getDot(CONTACT_US));
-        MainListItem volume=new MainListItem(VOLUME,R.drawable.volume,getDot(VOLUME));
-        MainListItem changeMusic=new MainListItem(CHANGE_MUSIC,R.drawable.change_music,getDot(CHANGE_MUSIC));
-        MainListItem clearHistory=new MainListItem(CLEAR_HISTORY,R.drawable.clear,getDot(CLEAR_HISTORY));
+        MainListItem email=new MainListItem(CONTACT_US,R.drawable.email,0);
+        MainListItem volume=new MainListItem(VOLUME,R.drawable.volume,0);
+        MainListItem changeMusic=new MainListItem(CHANGE_MUSIC,R.drawable.change_music,0);
+        MainListItem clearHistory=new MainListItem(CLEAR_HISTORY,R.drawable.clear,0);
         list.add(email);
         list.add(volume);
         list.add(changeMusic);
         list.add(clearHistory);
-    }
-
-    private int getDot(String name){
-        if(name==CONTACT_US&&choosed==1)
-            return R.drawable.dot;
-        if(name==VOLUME&&choosed==2)
-            return R.drawable.dot;
-        if(name==CHANGE_MUSIC&&choosed==3)
-            return R.drawable.dot;
-        if(name==CLEAR_HISTORY&&choosed==4)
-            return R.drawable.dot;
-        return 0;
     }
 
     @Override

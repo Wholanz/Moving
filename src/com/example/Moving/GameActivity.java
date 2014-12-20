@@ -8,6 +8,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -442,6 +443,16 @@ public class GameActivity extends Activity implements OnTouchListener {
 		super.onPause();
 		mp.pause();
 		Log.d(LOG_TAG,"Game:Pause");
+	}
+
+
+	public void Passed(){
+		//TODO:set animation and turn to the next stage if current level is not 6
+		LevelDatabaseHelper databaseHelper;
+		databaseHelper = new LevelDatabaseHelper(GameActivity.this,"LevelData",1);
+		SQLiteDatabase db;
+		db=databaseHelper.getReadableDatabase();
+		LevelDatabaseHelper.Unlock(db,0,0);
 	}
 
 }

@@ -39,8 +39,7 @@ public class LevelDatabaseHelper extends SQLiteOpenHelper {
 		final String insertion = "insert into levellock(level,"
 				+ "lock,difficulty) "
 				+ "values(?,?,?)";
-		
-		
+
 		db.execSQL(insertion, new Object[]{0,0,0});
 		db.execSQL(insertion, new Object[]{1,1,0});
 		db.execSQL(insertion, new Object[]{2,1,0});
@@ -71,7 +70,6 @@ public class LevelDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public static void Unlock( SQLiteDatabase db, int level, int difficulty){
-		
 		final String unlock = "update levellock set lock=? where level=? and difficulty=?";
 		db.execSQL(unlock, new Object[]{0,level,difficulty});;
 	}

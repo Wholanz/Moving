@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -129,6 +130,7 @@ public class MainList extends Activity {
                 isVoiceOn=!isVoiceOn;
             }
         });
+
     }
     private void initList(){
         MainListItem newGame=new MainListItem(NEW_GAME,R.drawable.newgame,R.drawable.arrow);
